@@ -37,7 +37,6 @@ export class TodoService {
 
   // Toggle Completed
   toggleCompleted(todo: Todo): Observable<any> {
-    const url: string = `${this.todosUrl}/toggle/${todo.id}`;
-    return this.http.put(url, todo, httpOptions);
+    return this.http.put(this.todosUrl, todo, httpOptions);
   }
 }

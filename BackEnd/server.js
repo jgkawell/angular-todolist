@@ -92,6 +92,23 @@ app.post("/todo", function (req, res) {
     });
 });
 
+app.put("/todo", function (req, res) {
+  var id = req.body.id;
+  var title = req.body.title;
+  var completed = req.body.completed;
+  var statement = `UPDATE tasks SET title = '${title}', completed =  '${completed}' WHERE id = '${id}' RETURNING *;`;
+
+  db.any(statement)
+    .then((results) => {
+      res.send(results[0]);
+    })
+    .catch((error) => {
+      console.error("ERROR:", error.message);
+      res.status(500).send('Failed to query database');
+    });
+});
+
+
 app.delete("/todo/:id", function (req, res) {
   var id = req.params.id;
   var statement = `DELETE FROM tasks WHERE id = ${id};`;
