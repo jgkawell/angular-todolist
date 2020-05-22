@@ -2,6 +2,7 @@ var express = require("express"); //Ensure our express framework has been added
 var app = express();
 var cors = require('cors');
 var bodyParser = require("body-parser"); //Ensure our body-parser tool has been added
+var config = require('./config');
 
 app.use(cors());
 app.use(bodyParser.json()); // support json encoded bodies
@@ -24,13 +25,7 @@ const initOptions = {
 //Create Database Connection
 var pgp = require("pg-promise")(initOptions);
 
-const dbConfig = {
-  host: "localhost",
-  port: 5432,
-  database: "todo",
-  user: "postgres",
-  password: "psql",
-};
+const dbConfig = config.db;
 
 var db = pgp(dbConfig);
 
@@ -123,5 +118,5 @@ app.delete("/todo/:id", function (req, res) {
     });
 });
 
-app.listen(3000);
-console.log("Server up on port 3000");
+app.listen(config.port);
+console.log(`Server up on port ${config.port}`);
