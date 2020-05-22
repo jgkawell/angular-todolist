@@ -10,6 +10,7 @@ import { TodoItemComponent } from "./components/todo-item/todo-item.component";
 import { HeaderComponent } from "./components/layout/header/header.component";
 import { AddTodoComponent } from "./components/add-todo/add-todo.component";
 import { AboutComponent } from "./components/pages/about/about.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { AboutComponent } from "./components/pages/about/about.component";
     AddTodoComponent,
     AboutComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, BrowserAnimationsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
