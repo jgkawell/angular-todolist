@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 import { Todo } from "../models/Todo";
+import { environment } from "../../environments/environment";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -14,19 +15,18 @@ const httpOptions = {
   providedIn: "root",
 })
 export class TodoService {
-  todosUrl: string = "http://localhost:3000/todo";
+  todosUrl: string = environment.serverURL;
 
   constructor(private http: HttpClient) {}
 
   getTodos(): Observable<Todo[]> {
-    console.log("Requesting todos...");
-    return this.http.get<Todo[]>(`${this.todosUrl}/all`);
+    const url: string = `${this.todosUrl}/all`;
+    return this.http.get<Todo[]>(url);
   }
 
   // Delete Todo
   deleteTodo(todo: Todo): Observable<Todo> {
     const url: string = `${this.todosUrl}/${todo.id}`;
-    console.log(url);
     return this.http.delete<Todo>(url, httpOptions);
   }
 
