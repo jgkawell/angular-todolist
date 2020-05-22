@@ -1,5 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
+import { Todo } from '../../models/Todo';
+
 @Component({
   selector: 'app-add-todo',
   templateUrl: './add-todo.component.html',
@@ -12,16 +14,16 @@ export class AddTodoComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   onSubmit() {
-    const todo = {
+    const todo:Todo = {
       title: this.title,
       completed: false
-    }
+    };
 
     this.addTodo.emit(todo)
+    this.title = null;
   }
 
 }

@@ -1,7 +1,9 @@
 var express = require("express"); //Ensure our express framework has been added
 var app = express();
+var cors = require('cors');
 var bodyParser = require("body-parser"); //Ensure our body-parser tool has been added
 
+app.use(cors());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
@@ -39,71 +41,68 @@ db.connect()
     obj.done(); // success, release connection;
   })
   .catch((error) => {
-    console.log("ERROR:", error.message);
+    console.error("ERROR:", error.message);
   });
 
 // set the view engine to ejs
-app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/")); //This line is necessary for us to use relative paths and access our resources directory
 
 // login page
 app.get("/", function (req, res) {
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/plain");
-  res.send("Hello World");
+  res.send({msg: "Server is running..."});
 });
 
-app.get("/test", function (req, res) {
+app.get("/todo/all", function (req, res) {
   var query = "SELECT * FROM tasks;";
   db.any(query)
-    .then((rows) => {
-      res.statusCode = 200;
-      res.setHeader("Content-Type", "text/plain");
-      res.send(rows);
+    .then((results) => {
+      res.send(results);
     })
     .catch((error) => {
-      console.log("ERROR:", error.message);
-      request.flash("error", err);
-      res.statusCode = 500;
-      res.setHeader("Content-Type", "text/plain");
-      res.send("failed to query database");
+      console.error("ERROR:", error.message);
+      res.status(500).send('Failed to query database');
     });
 });
 
-app.post("/test", function (req, res) {
+app.get("/todo/id", function (req, res) {
+  var id = req.body.id;
+  var query = `SELECT * FROM tasks WHERE id = ${id};`;
+  db.any(query)
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error("ERROR:", error.message);
+      res.status(500).send('Failed to query database');
+    });
+});
+
+app.post("/todo", function (req, res) {
   var title = req.body.title;
   var completed = req.body.completed;
-  var statement = `INSERT INTO tasks(title, completed) VALUES('${title}', '${completed}');`;
+  var statement = `INSERT INTO tasks(title, completed) VALUES('${title}', '${completed}') RETURNING *;`;
 
   db.any(statement)
-    .then((info) => {
-      res.statusCode = 200;
-      res.send(info);
+    .then((results) => {
+      res.send(results[0]);
     })
     .catch((error) => {
-      console.log("ERROR:", error.message);
-      request.flash("error", err);
-      res.statusCode = 500;
-      res.setHeader("Content-Type", "text/plain");
-      res.send("failed to query database");
+      console.error("ERROR:", error.message);
+      res.status(500).send('Failed to query database');
     });
 });
 
-app.delete("/test", function (req, res) {
-  var id = req.body.id;
+app.delete("/todo/:id", function (req, res) {
+  var id = req.params.id;
   var statement = `DELETE FROM tasks WHERE id = ${id};`;
 
   db.any(statement)
-    .then((info) => {
-      res.statusCode = 200;
-      res.send(info);
+    .then(() => {
+      res.send({msg: "Delete successful"});
     })
     .catch((error) => {
-      console.log("ERROR:", error.message);
-      request.flash("error", err);
-      res.statusCode = 500;
-      res.setHeader("Content-Type", "text/plain");
-      res.send("failed to query database");
+      console.error("ERROR:", error.message);
+      res.status(500).send('Failed to query database');
     });
 });
 
