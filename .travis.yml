@@ -9,6 +9,7 @@ before_script:
     - npm install -g @angular/cli
 
 script:
-    - cd ./FrontEnd && npm install
-    - cd ./FrontEnd && npm lint
-    - cd ./FrontEnd && npm build
+    - cd ./FrontEnd
+    - npm install
+    - npm lint
+    - npm build
