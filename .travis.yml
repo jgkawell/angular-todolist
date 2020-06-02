@@ -7,13 +7,16 @@ dist: trusty
 
 cache:
     directories:
-      - "FrontEnd/node_modules"
+        - "BackEnd/node_modules"
+        - "FrontEnd/node_modules"
 
 before_script:
     - npm install -g @angular/cli
 
 script:
-    - cd ./FrontEnd
+    - cd ./BackEnd
+    - npm run lint
+    - cd ../FrontEnd
     - npm install
     - npm run lint
     - npm run build
