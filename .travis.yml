@@ -5,6 +5,10 @@ node_js:
 
 dist: trusty
 
+cache:
+    directories:
+      - "FrontEnd/node_modules"
+
 before_script:
     - npm install -g @angular/cli
 
