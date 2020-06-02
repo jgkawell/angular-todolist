@@ -1,0 +1,13 @@
+language: node_js
+
+node_js:
+    - "14"
+
+dist: trusty
+
+before_script:
+    - npm install -g @angular/cli
+
+script:
+    - cd FrontEnd && ng lint
+    - cd FrontEnd && ng build
