@@ -11,5 +11,5 @@ before_script:
 script:
     - cd ./FrontEnd
     - npm install
-    - npm lint
-    - npm build
+    - npm run lint
+    - npm run build
