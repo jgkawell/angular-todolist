@@ -4,11 +4,11 @@ var config = {
 };
 
 config.db = {
-  host: "localhost",
+  host: "db",
   port: 5432,
   database: "todo",
-  user: "postgres",
-  password: "psql",
+  user: "todo",
+  password: "todo",
 };
 
 // Override default settings
