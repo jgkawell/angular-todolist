@@ -4,7 +4,7 @@ var config = {
 };
 
 config.db = {
-  host: "db",
+  host: "database",
   port: 5432,
   database: "todo",
   user: "todo",

@@ -5,13 +5,16 @@ node_js:
 
 dist: trusty
 
+services:
+    - docker
+
 cache:
     directories:
         - "BackEnd/node_modules"
         - "FrontEnd/node_modules"
 
 before_script:
-    - npm install -g @angular/cli
+    - npm install -g @angular/cli@9.1.7
     - npm install -g eslint
 
 script:
@@ -21,3 +24,13 @@ script:
     - npm install
     - npm run lint
     - npm run build
+    - docker-compose build
+
+before_deploy:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+deploy:
+    provider: script
+    script: bash docker_push
+    on:
+        branch: master
