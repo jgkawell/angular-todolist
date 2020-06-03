@@ -17,11 +17,11 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      db:
+      database:
         condition: service_healthy
-  db:
-    image: jgkawell/angular-todolist-db:latest
-    container_name: db
+  database:
+    image: jgkawell/angular-todolist-database:latest
+    container_name: database
     build:
       context: ./Database
       dockerfile: Dockerfile

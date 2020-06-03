@@ -1,0 +1,5 @@
+#!/bin/bash
+
+docker push jgkawell/angular-todolist-frontend:latest
+docker push jgkawell/angular-todolist-backend:latest
+docker push jgkawell/angular-todolist-database:latest
