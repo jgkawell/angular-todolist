@@ -24,8 +24,9 @@ script:
     - npm install
     - npm run lint
     - npm run build
-    - docker-compose build
     - cd ..
+    - mv example.env .env
+    - docker-compose build
 
 before_deploy:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
