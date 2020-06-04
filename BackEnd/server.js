@@ -118,5 +118,14 @@ app.delete("/todo/:id", function (req, res) {
     });
 });
 
-app.listen(config.port);
+
+var https = require('https');
+var fs = require('fs');
+
+var httpsOptions = {
+    key: fs.readFileSync('ssl/server.key'),
+    cert: fs.readFileSync('ssl/server.crt')
+};
+
+https.createServer(httpsOptions, app).listen(config.port);
 console.log(`Server up on port ${config.port}`);

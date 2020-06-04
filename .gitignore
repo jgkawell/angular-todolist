@@ -1,4 +1,8 @@
-node_modules/
 dist/
-.vscode
 misc/
+node_modules/
+BackEnd/ssl/
+FrontEnd/ssl/
+
+.vscode
+.env
