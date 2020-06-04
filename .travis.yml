@@ -24,6 +24,7 @@ script:
     - npm install
     - npm run lint
     - npm run build
+    - mv example.env .env
     - docker-compose build
     - cd ..
 
