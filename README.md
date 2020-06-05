@@ -14,6 +14,7 @@ The installation is fairly straightforward since everything is set up in docker-
 ```bash
 git clone https://github.com/jgkawell/angular-todolist.git
 cd angular-todolist
+cp example.env .env
 docker-compose up -d
 ```
 
