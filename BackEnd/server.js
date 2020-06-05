@@ -1,21 +1,14 @@
-var express = require("express"); //Ensure our express framework has been added
+var express = require("express");
 var app = express();
 var cors = require('cors');
-var bodyParser = require("body-parser"); //Ensure our body-parser tool has been added
 var config = require('./config');
 
 app.use(cors());
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+// Log db connection errors
 const initOptions = {
-  // global event notification;
   error(error, e) {
     if (e.cn) {
-      // A connection-related error;
-      //
-      // Connections are reported back with the password hashed,
-      // for safe errors logging, without exposing passwords.
       console.log("CN:", e.cn);
       console.log("EVENT:", error.message || error);
     }
@@ -24,9 +17,7 @@ const initOptions = {
 
 //Create Database Connection
 var pgp = require("pg-promise")(initOptions);
-
 const dbConfig = config.db;
-
 var db = pgp(dbConfig);
 
 // Test connection
@@ -39,14 +30,12 @@ db.connect()
     console.error("ERROR:", error.message);
   });
 
-// set the view engine to ejs
-app.use(express.static(__dirname + "/")); //This line is necessary for us to use relative paths and access our resources directory
-
-// login page
+// Verify the server is up and reachable
 app.get("/", function (req, res) {
   res.send({msg: "Server is running..."});
 });
 
+// Get all the available tasks
 app.get("/todo/all", function (req, res) {
   var query = "SELECT * FROM tasks;";
   db.any(query)
@@ -59,6 +48,7 @@ app.get("/todo/all", function (req, res) {
     });
 });
 
+// Get a todo item by its id
 app.get("/todo/id", function (req, res) {
   var id = req.body.id;
   var query = `SELECT * FROM tasks WHERE id = ${id};`;
@@ -72,6 +62,7 @@ app.get("/todo/id", function (req, res) {
     });
 });
 
+// Insert a new todo item into the db
 app.post("/todo", function (req, res) {
   var title = req.body.title;
   var completed = req.body.completed;
@@ -87,6 +78,7 @@ app.post("/todo", function (req, res) {
     });
 });
 
+// Update the title, and status of a todo item
 app.put("/todo", function (req, res) {
   var id = req.body.id;
   var title = req.body.title;
@@ -118,7 +110,7 @@ app.delete("/todo/:id", function (req, res) {
     });
 });
 
-
+// Setup secure server
 var https = require('https');
 var fs = require('fs');
 
