@@ -1,7 +1,8 @@
 dist/
 misc/
 node_modules/
-*ssl/
+*.crt
+*.key
 
 .vscode
 .env
