@@ -9,6 +9,7 @@ services:
       args:
         - FRONTEND_PORT=${FRONTEND_PORT}
         - BACKEND_BASE_URL=${BACKEND_BASE_URL}
+        - BACKEND_PRODUCTION=${BACKEND_PRODUCTION}
         - BACKEND_PORT=${BACKEND_PORT}
     ports:
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"
