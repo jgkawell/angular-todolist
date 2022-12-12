@@ -6,7 +6,7 @@
     },
     "dependencies": {
         "cors": "^2.8.5",
-        "express": "^4.6.1",
+        "express": "^4.17.3",
         "http2": "^3.3.7",
         "pg-promise": "^8.5.1"
     },
